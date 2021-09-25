@@ -1,8 +1,10 @@
 from django.db import models
 from datetime import date
 
-
 # Create your models here.
+from django.urls import reverse
+
+
 class Category(models.Model):
     name = models.CharField('Category', max_length=40)
     description = models.TextField('Description', max_length=150, blank=True)
@@ -59,6 +61,11 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+    def get_review(self):
+        return self.reviews_set.filter(parent__isnull=True)
+
+    def get_absolute_url(self):
+        return reverse('movie_detail_url', kwargs={'slug': self.url})
 
     class Meta:
         verbose_name = 'Movie'
@@ -83,7 +90,7 @@ class RatingStar(models.Model):
     value = models.SmallIntegerField(default=0)
 
     def __str__(self):
-        return self.value
+        return str(self.value)
 
     class Meta:
         verbose_name = 'Rating star'
