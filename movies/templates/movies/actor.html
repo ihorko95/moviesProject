@@ -1,0 +1,48 @@
+{% extends 'movies/base.html' %}
+{% load static %}
+{%block logo%}
+<div class="main-banner bg " id="home">
+    {%endblock logo%}
+    {%block content%}
+
+    <!---->
+    <!-- banner -->
+
+    <!-- //product left -->
+    <!-- product right -->
+    <div class="left-ads-display col-lg-8">
+        <div class="row">
+            <div class="desc1-left col-md-6">
+                <img src={{actor.image.url}} class="img-fluid" alt="">
+            </div>
+            <div class="desc1-right col-md-6 pl-lg-4">
+                <h3 class="editContent" style="outline: none; cursor: inherit;">
+                    {{actor.name}}</h3>
+                <ul>
+                    <li style="list-style: none"><span><b>Год:</b> {{actor.age}}</span></li>
+                    <li style="list-style: none">
+                        <span><b>Режиссер:</b> {%for movie in actor.film_director.all%} <a
+                                href="{{movie.get_absolute_url}}">{{movie}}</a> {%endfor%}</span>
+                    </li>
+                    <li style="list-style: none">
+                    <span><b>Actor:</b> {%for movie in actor.film_actor.all%} <a
+                            href="{{movie.get_absolute_url}}">{{movie}}</a>  {%endfor%}</span>
+                    </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row sub-para-w3layouts mt-5">
+
+                                <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
+                                   About {{actor.name}}</h3>
+                                <p>
+                                    {{actor.description|safe}}
+                                </p>
+                            </div>
+                            <hr>
+                        </div>
+
+                        {%endblock content%}
+                    </div>

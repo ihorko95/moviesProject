@@ -23,6 +23,7 @@ class Actor(models.Model):
     age = models.PositiveSmallIntegerField(default=0)
     description = models.TextField('Description', max_length=150, blank=True)
     image = models.ImageField('Image', upload_to='actors/')
+    url = models.SlugField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -30,6 +31,9 @@ class Actor(models.Model):
     class Meta:
         verbose_name = 'Actors and Directors'
         verbose_name_plural = 'Actors and Directors'
+
+    def get_absolute_url(self):
+        return reverse('actor_detail_url', kwargs={'slug': self.url})
 
 
 class Genre(models.Model):
@@ -49,8 +53,8 @@ class Movie(models.Model):
     year = models.PositiveSmallIntegerField(default=int(str(date.today())[:4]))
     country = models.CharField(max_length=30, default='')
     directors = models.ManyToManyField(Actor, verbose_name='director', related_name='film_director')
-    actors = models.ManyToManyField(Actor, verbose_name='actors', related_name='film_actor')
-    genres = models.ManyToManyField(Genre)
+    actors = models.ManyToManyField(Actor, verbose_name='actor', related_name='film_actor')
+    genres = models.ManyToManyField(Genre, verbose_name='genre', related_name='film_genre')
     world_premier = models.DateField('Premier', default=date.today)
     budget = models.PositiveSmallIntegerField(default=0, help_text='Set in $')
     fees_in_usa = models.PositiveSmallIntegerField(default=0, help_text='Set in $')
